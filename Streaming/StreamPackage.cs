@@ -46,7 +46,7 @@ namespace MonoSound.Streaming{
 				underlyingStream.Position = sampleReadStart;
 		}
 
-		protected virtual void Initialize(){ }
+		protected virtual void Initialize() { }
 
 		private void QueueBuffers(object sender, EventArgs e){
 			//Read() won't add new buffers if this sound shouldn't be looping, so calling it twice here is just fine
@@ -56,7 +56,7 @@ namespace MonoSound.Streaming{
 
 		public abstract void ReadSamples(double seconds, out byte[] samples, out int bytesRead, out bool endOfStream);
 
-		private void Read(double seconds){
+		protected void Read(double seconds){
 			//The sound has finished playing.  No need to keep trying to stream more data
 			if(FinishedStreaming)
 				return;

@@ -83,7 +83,7 @@ namespace MonoSound.Streaming{
 			};
 
 			string name = GetSafeName(cueName);
-			lock(modifyLock){
+			lock (modifyLock){
 				streams.Add(name, package);
 
 				updateKeys = true;
@@ -153,10 +153,10 @@ namespace MonoSound.Streaming{
 			Stopwatch watch = new Stopwatch();
 			watch.Start();
 
-			while(true){
-				lock(modifyLock){
+			while (true) {
+				lock (modifyLock) {
 					//Keep asking if we should stop the streams to allow the sound engines to stop early enough before the hardware is lost
-					if(stopStreaming){
+					if(stopStreaming) {
 						foreach(var stream in streams.Values)
 							stream.Dispose();
 
@@ -167,12 +167,17 @@ namespace MonoSound.Streaming{
 
 					UpdateKeys();
 				
-					if(keys != null){
-						for(int i = 0; i < keys.Length; i++){
+					if (keys != null) {
+						for (int i = 0; i < keys.Length; i++) {
 							StreamPackage stream = streams[keys[i]];
 
 							//If the stream has stopped before the sound has finished streaming, reset the counters and stream
-							if(stream.sfx.State == SoundState.Stopped && stream.secondsRead > 0 && !stream.looping && !stream.FinishedStreaming){
+							if (
+								!stream.looping &&
+								!stream.FinishedStreaming &&
+								stream.sfx.State == SoundState.Stopped &&
+								stream.secondsRead > 0
+							){
 								stream.Reset();
 								continue;
 							}

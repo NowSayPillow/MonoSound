@@ -4,7 +4,7 @@ using System;
 using System.IO;
 
 namespace MonoSound.Streaming{
-	internal class WavStream : StreamPackage{
+	internal class WavStream : StreamPackage {
 		public WavStream(string file) : base(File.OpenRead(file), AudioType.WAV){ }
 
 		public WavStream(Stream stream) : base(stream, AudioType.WAV){ }
@@ -23,6 +23,8 @@ namespace MonoSound.Streaming{
 			TotalBytes = BitConverter.ToInt32(header, 40);
 
 			sampleReadStart = underlyingStream.Position;
+
+			Read(0.1f);
 		}
 
 		public override void ReadSamples(double seconds, out byte[] samples, out int bytesRead, out bool endOfStream){
@@ -59,6 +61,8 @@ namespace MonoSound.Streaming{
 
 			underlyingStream.Read(read, 0, 4);
 			TotalBytes = BitConverter.ToInt32(read, 0);
+
+			Read(0.1f);
 		}
 	}
 
@@ -74,6 +78,8 @@ namespace MonoSound.Streaming{
 			SampleRate = mp3Stream.Frequency;
 			BitsPerSample = (short)(mp3Stream.Format == MP3Sharp.SoundFormat.Pcm16BitMono ? 8 : 16);
 			TotalBytes = -1;
+
+			Read(0.1f);
 		}
 	}
 
@@ -81,14 +87,14 @@ namespace MonoSound.Streaming{
 		private NVorbis.VorbisReader vorbisStream;
 		private TimeSpan vorbisReadStart;
 
-		public OggStream(string file) : base(AudioType.OGG){
+		public OggStream(string file) : base(AudioType.OGG) {
 			//VorbisReader(string) closes the stream on dispose by default
 			vorbisStream = new NVorbis.VorbisReader(file);
 
 			Initialize();
 		}
 
-		public OggStream(Stream stream) : base(AudioType.OGG){
+		public OggStream(Stream stream) : base(AudioType.OGG) {
 			vorbisStream = new NVorbis.VorbisReader(stream, true);
 
 			Initialize();
@@ -101,6 +107,8 @@ namespace MonoSound.Streaming{
 			TotalBytes = -1;
 
 			vorbisReadStart = vorbisStream.DecodedTime;
+
+			Read(0.1f);
 		}
 
 		public override void ReadSamples(double seconds, out byte[] samples, out int bytesRead, out bool endOfStream){
