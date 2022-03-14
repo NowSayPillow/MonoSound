@@ -12,14 +12,25 @@ namespace MonoSound.Streaming{
 		private static int StreamSourceCreationIndex;
 
 		public static SoundEffectInstance InitializeStream(string path, bool loopedSound, AudioType type){
-			StreamPackage package = type switch{
-				AudioType.XNB => new XnbStream(path),
-				AudioType.XWB => throw new ArgumentException("XWB streams should be initialized via StreamManager.InitializeXWBStream()"),
-				AudioType.WAV => new WavStream(path),
-				AudioType.OGG => new OggStream(path),
-				AudioType.MP3 => new Mp3Stream(path),
-				_ => throw new ArgumentException("Unknown stream type requested")
-			};
+			StreamPackage package = null;
+			switch(type) {
+				case AudioType.XNB:
+					package = new XnbStream(path);
+					break;
+				case AudioType.XWB:
+					throw new ArgumentException("XWB streams should be initialized via StreamManager.InitializeXWBStream()");
+				case AudioType.WAV:
+					package = new WavStream(path);
+					break;
+				case AudioType.OGG:
+					package = new OggStream(path);
+					break;
+				case AudioType.MP3:
+					package = new Mp3Stream(path);
+					break;
+				default:
+					throw new ArgumentException("Unknown stream type requested");
+			}
 
 			package.looping = loopedSound;
 
@@ -34,14 +45,25 @@ namespace MonoSound.Streaming{
 		}
 
 		public static SoundEffectInstance InitializeStream(Stream sampleSource, bool loopedSound, AudioType type){
-			StreamPackage package = type switch{
-				AudioType.XNB => new XnbStream(sampleSource),
-				AudioType.XWB => throw new ArgumentException("XWB streams should be initialized via StreamManager.InitializeXWBStream()"),
-				AudioType.WAV => new WavStream(sampleSource),
-				AudioType.OGG => new OggStream(sampleSource),
-				AudioType.MP3 => new Mp3Stream(sampleSource),
-				_ => throw new ArgumentException("Unknown stream type requested")
-			};
+			StreamPackage package = null;
+			switch (type) {
+				case AudioType.XNB:
+					package = new XnbStream(sampleSource);
+					break;
+				case AudioType.XWB:
+					throw new ArgumentException("XWB streams should be initialized via StreamManager.InitializeXWBStream()");
+				case AudioType.WAV:
+					package = new WavStream(sampleSource);
+					break;
+				case AudioType.OGG:
+					package = new OggStream(sampleSource);
+					break;
+				case AudioType.MP3:
+					package = new Mp3Stream(sampleSource);
+					break;
+				default:
+					throw new ArgumentException("Unknown stream type requested");
+			}
 
 			package.looping = loopedSound;
 

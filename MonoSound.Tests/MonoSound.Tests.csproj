@@ -30,11 +30,11 @@
     <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.0.1641" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="MonoSound">
-      <HintPath>..\bin\Release\netcoreapp3.1\MonoSound.dll</HintPath>
+    <Reference Include="FNA">
+      <HintPath>..\..\FNA\bin\Debug\FNA.dll</HintPath>
+    </Reference>
+    <Reference Include="MonoSound.FNA">
+      <HintPath>..\bin\Debug\MonoSound.FNA.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>

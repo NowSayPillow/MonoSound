@@ -89,7 +89,7 @@ namespace MonoSound.Streaming{
 		}
 
 		public OggStream(Stream stream) : base(AudioType.OGG){
-			vorbisStream = new NVorbis.VorbisReader(stream, closeStreamOnDispose: true);
+			vorbisStream = new NVorbis.VorbisReader(stream, true);
 
 			Initialize();
 		}

@@ -359,17 +359,20 @@ namespace MonoSound{
 		/// </summary>
 		/// <param name="filePath">The path to the sound file. Must refer to a compiled .xnb file, a .wav file, an .ogg file or an .mp3 file.</param>
 		/// <param name="looping">Whether the sound should loop</param>
-		public static SoundEffectInstance GetStreamedSound(string filePath, bool looping){
+		public static SoundEffectInstance GetStreamedSound(string filePath, bool looping) {
 			ThrowIfNotInitialized();
 
-			string extension = Path.GetExtension(filePath);
-
-			return extension switch{
-				".xnb" => StreamManager.InitializeStream(filePath, looping, AudioType.XNB),
-				".wav" => StreamManager.InitializeStream(filePath, looping, AudioType.WAV),
-				".ogg" => StreamManager.InitializeStream(filePath, looping, AudioType.OGG),
-				".mp3" => StreamManager.InitializeStream(filePath, looping, AudioType.MP3),
-				_ => throw new ArgumentException($"Input file must be a compiled XNB file, a WAVE file, an OGG Vorbis file or an MPEG Audio Layer III file: \"{filePath}\""),
+			switch (Path.GetExtension(filePath)) {
+				case (".xnb"):
+					return StreamManager.InitializeStream(filePath, looping, AudioType.XNB);
+				case (".wav"):
+						return StreamManager.InitializeStream(filePath, looping, AudioType.WAV);
+				case (".ogg"): 
+					return StreamManager.InitializeStream(filePath, looping, AudioType.OGG);
+				case (".mp3"):
+					return StreamManager.InitializeStream(filePath, looping, AudioType.MP3);
+				default:
+					throw new ArgumentException($"Input file must be a compiled XNB file, a WAVE file, an OGG Vorbis file or an MPEG Audio Layer III file: \"{filePath}\"");
 			};
 		}
 
@@ -436,13 +439,21 @@ namespace MonoSound{
 		public static int RegisterBiquadResonantFilter(SoundFilterType type, float strength, float frequencyCap, float resonance){
 			ThrowIfNotInitialized();
 
-			var filterType = type switch{
-				SoundFilterType.LowPass => BiquadResonantFilter.LOWPASS,
-				SoundFilterType.BandPass => BiquadResonantFilter.BANDPASS,
-				SoundFilterType.HighPass => BiquadResonantFilter.HIGHPASS,
-				_ => throw new ArgumentException("Given type wasn't a valid Biquad Resonant Filter type.", "type")
-			};
-			
+			var filterType = -1;
+			switch(type) {
+				case SoundFilterType.LowPass:
+					filterType = BiquadResonantFilter.LOWPASS;
+					break;
+				case SoundFilterType.BandPass:
+					filterType = BiquadResonantFilter.BANDPASS;
+					break;
+				case SoundFilterType.HighPass:
+					filterType = BiquadResonantFilter.HIGHPASS;
+					break;
+				default:
+					throw new ArgumentException("Given type wasn't a valid Biquad Resonant Filter type.", "type");
+			}
+
 			BiquadResonantFilter bqf = new BiquadResonantFilter();
 			bqf.setParams(filterType, frequencyCap, resonance);
 			bqf.SetStrength(strength);

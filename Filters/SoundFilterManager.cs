@@ -230,11 +230,12 @@ namespace MonoSound.Filters{
 		}
 
 		private static string GetFileNameExtra(SoundFilterType[] types){
-			string ret = " - ";
-			for(int i = 0; i < types.Length; i++)
-				ret += $"{types[i]}|";
-			ret = ret[0..^1];
-			return ret;
+			var extra = " - ";
+			for (int i = 0; i < types.Length; i++) {
+				extra += $"{ types[0] }{(i < types.Length - 1 ? "|" : "")}";
+			}
+
+			return extra;
 		}
 	}
 }
