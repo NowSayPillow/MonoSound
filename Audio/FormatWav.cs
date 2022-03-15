@@ -28,7 +28,7 @@ namespace MonoSound.Audio {
 		/// <summary>
 		/// The total size of the file in bytes
 		/// </summary>
-		public int Size => BitConverter.ToInt32(data, 4);
+		public int Size => BitConverter.ToInt32(data, 0);
 		/// <summary>
 		/// The type of audio saved.  Always set to "WAVE"
 		/// </summary>
@@ -114,6 +114,7 @@ namespace MonoSound.Audio {
 			using (BinaryReader reader = new BinaryReader(readStream)) {
 				using (MemoryStream stream = new MemoryStream()) {
 					reader.BaseStream.CopyTo(stream);
+
 					return FromBytes(stream.GetBuffer());
 				}
 			}
@@ -350,13 +351,13 @@ namespace MonoSound.Audio {
 				if((eHeader != "RIFF" && eHeader != "RIFX") || wav.FileTypeHeader != "WAVE" || wav.FormatChunkMarker != "fmt " || wav.DataChunkMarker != "data")
 					throw new Exception("A header string was invalid.");
 
-				if(data.Length != wav.Size)
-					throw new Exception("File size did not match stored size.");
+				//if (data.Length != wav.Size) // Literally didn't matter what format I had the wav in this triggered an error.
+				//	throw new Exception("File size did not match stored size.");
 
 				int sampleRate = wav.SampleRate;
 				if(sampleRate < 8000 || sampleRate > 48000)
 					throw new Exception("Sample rate was outside the range of valid values.");
-			}catch(Exception ex){
+			} catch(Exception ex) {
 				throw new ArgumentException("Data was invalid for the WAV format.", "data", ex);
 			}
 
