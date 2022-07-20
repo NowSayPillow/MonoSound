@@ -293,7 +293,7 @@ namespace MonoSound.Filters.Instances {
 		}
 
 		public void process(float* aSampleData, long aNumSamples){
-			float* inputL, inputR;
+			float* inputL/* , inputR */;
 			inputL = aSampleData;
 		//	inputR = aSampleData + aNumSamples;
 
@@ -390,7 +390,7 @@ namespace MonoSound.Filters.Instances {
 
 	internal unsafe class Comb{
 		float	mFeedback;
-		float	mFilterstore;
+		// float	mFilterstore;
 		float	mDamp1;
 		float	mDamp2;
 		float*  mBuffer;
@@ -398,7 +398,7 @@ namespace MonoSound.Filters.Instances {
 		int		mBufidx;
 
 		public Comb(){
-			mFilterstore = 0;
+			// mFilterstore = 0;
 			mBufidx = 0;
 			mFeedback = 0;
 			mDamp1 = 0;

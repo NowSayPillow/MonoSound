@@ -106,7 +106,7 @@ namespace MonoSound.Streaming{
 			BitsPerSample = -1;
 			TotalBytes = -1;
 
-			vorbisReadStart = vorbisStream.DecodedTime;
+			vorbisReadStart = vorbisStream.TimePosition;
 
 			Read(0.1f);
 		}
@@ -139,7 +139,7 @@ namespace MonoSound.Streaming{
 		}
 
 		public override void Reset(){
-			vorbisStream.DecodedTime = vorbisReadStart;
+			vorbisStream.TimePosition = vorbisReadStart;
 
 			base.Reset();
 		}

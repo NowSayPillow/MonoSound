@@ -43,7 +43,7 @@ namespace MonoSound.Filters.Instances{
 
 		readonly BQRStateData[] mState = new BQRStateData[8];
 		float mA0, mA1, mA2, mB1, mB2;
-		int mDirty;
+		// int mDirty;
 		float mSamplerate;
 
 		public BiquadResonantFilter(){
@@ -75,7 +75,7 @@ namespace MonoSound.Filters.Instances{
 		}
 
 		private void calcBQRParams(){
-			mDirty = 0;
+			// mDirty = 0;
 
 			float omega = (float)(2.0f * Math.PI * mParam[FREQUENCY] / mSamplerate);
 			float sin_omega = (float)Math.Sin(omega);
