@@ -2,13 +2,14 @@
 	<Import Sdk="Microsoft.NET.Sdk" Project="Sdk.props" />
 
   <PropertyGroup>
-		<TargetFrameworks>netstandard2.0;net7.0</TargetFrameworks>
+		<TargetFrameworks>net7.0</TargetFrameworks>
     <Platforms>x64</Platforms>
     <RootNamespace>MonoSound</RootNamespace>
     <AssemblyName>MonoSound.FNA</AssemblyName>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<PublishSingleFile>true</PublishSingleFile>
+		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
