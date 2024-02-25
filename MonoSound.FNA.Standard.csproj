@@ -10,6 +10,7 @@
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<PublishSingleFile>true</PublishSingleFile>
 		<GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute>
+		<PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
